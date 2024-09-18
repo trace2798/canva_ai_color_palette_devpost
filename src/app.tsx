@@ -24,8 +24,8 @@ import React, { useEffect, useState } from "react";
 import styles from "styles/components.css";
 import { auth } from "@canva/user";
 
-const BACKEND_URL = `http://127.0.0.1:8787/`;
-const BACKEND_EDIT_URL = `http://127.0.0.1:8787/edit-palette`;
+const BACKEND_URL = `https://empty-pond-29ea.shreyaschaliha27.workers.dev`;
+const BACKEND_EDIT_URL = `${BACKEND_URL}/edit-palette`;
 
 type UIState = {
   prompt: string;
@@ -86,15 +86,15 @@ export const App = () => {
   useEffect(() => {
     appElementClient.registerOnElementChange((element) => {
       if (element && validateColors(element.data.colors)) {
-        console.log("Element Data", element.data);
+        //console.log("Element Data", element.data);
         setColorState({
           colors: element.data.colors,
           isSelected: true,
         });
-        console.log("oink oink");
+        //console.log("oink oink");
         setSelectedElementIsValid(true);
       } else {
-        console.log("No element data found");
+        //console.log("No element data found");
         setSelectedElementIsValid(false);
       }
     });
@@ -126,7 +126,7 @@ export const App = () => {
         method: "POST",
       });
       const body = await res.json();
-      console.log("Body Body", body.message);
+      //console.log("Body Body", body.message);
       setResponseBody(body.message);
       const colors = parseColorsFromResponse(body.message);
       if (colors.length === 0) {
@@ -140,7 +140,7 @@ export const App = () => {
         colors: colors.map(([hex, name]) => ({ hex, name })),
       }));
     } catch (error) {
-      console.error(error);
+      //console.error(error);
       setResponseBody("");
       setErrorMessage(
         "Uh-oh! The AI is having a little nap. Try again or give our support team a shout!"
@@ -168,7 +168,7 @@ export const App = () => {
         method: "POST",
       });
       const body = await res.json();
-      console.log("Body Body", body.message);
+      //console.log("Body Body", body.message);
       setResponseBody(body.message);
       const colors = parseColorsFromResponse(body.message);
       if (colors.length === 0) {
@@ -182,7 +182,7 @@ export const App = () => {
         colors: colors.map(([hex, name]) => ({ hex, name })),
       }));
     } catch (error) {
-      console.error(error);
+      //console.error(error);
       setResponseBody("");
       setErrorMessage(
         "Uh-oh! The AI is having a little nap. Try again or give our support team a shout!"
@@ -214,12 +214,12 @@ export const App = () => {
   };
 
   const handleToggleEditing = () => {
-    console.log("Color State", colorState);
+    //console.log("Color State", colorState);
     setEditing(true);
   };
 
   const handleToggleAIEditing = () => {
-    console.log("Color State", colorState);
+    //console.log("Color State", colorState);
     setAiEditing(true);
   };
 
@@ -234,7 +234,7 @@ export const App = () => {
       state.showText,
       state.showText
     );
-    console.log("Data Url", dataUrl);
+    //console.log("Data Url", dataUrl);
     await upload({
       type: "IMAGE",
       mimeType: "image/png",
@@ -647,7 +647,7 @@ function parseColorsFromResponse(response: string): [string, string][] {
   while ((match = colorRegex.exec(response)) !== null) {
     matches.push([match[1], match[2]]);
   }
-  console.log(matches);
+  //console.log(matches);
   return matches;
 }
 
